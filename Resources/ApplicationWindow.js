@@ -9,7 +9,7 @@ var ApplicationWindow = function() {
 	});
 
 	var game = platino.createGameView();
-	game.fps = 60;
+	game.fps = 30;
 	game.color(0, 0, 0);
 	game.debug = false; // disables debug logs (not to be used for production)
 	game.enableOnDrawFrameEvent = false; // optimization: setting to 'false' disables 'enterframe' event
@@ -25,8 +25,8 @@ var ApplicationWindow = function() {
 	//game.onFpsInterval = 5000; // sets 'onfps' event interval in msec (default: 5000)
 
 	// Set your target screen resolution (in platform-specific units) below
-	var targetWidth = 1290;
-	var targetHeight = 860;
+	var targetWidth = 960;
+	var targetHeight = 640;
 	
 	game.TARGET_SCREEN = {
 		width: targetWidth,
@@ -89,16 +89,20 @@ var ApplicationWindow = function() {
 
 	// Updates screen size, scale, and margins
 	var updateScreenSize = function() {
-		//alert(game.size.height + '\n' + game.TARGET_SCREEN.height + '\n' + (game.size.height / game.TARGET_SCREEN.height));
 		var screenScale = game.size.height / game.TARGET_SCREEN.height;
 		game.screen = {
 			width: game.size.width / screenScale,
 			height: game.size.height / screenScale
 		};
 
-		game.touchScaleX = game.screen.width  / game.size.width;
-		game.touchScaleY = game.screen.height / game.size.height;
+		game.touchScaleX = game.screen.width  / game.size.width; // * (Ti.Platform.displayCaps.platformWidth / game.size.width);
+		game.touchScaleY = game.screen.height / game.size.height; // * (Ti.Platform.displayCaps.platformHeight / game.size.height);
 		game.screenScale = game.screen.height / game.TARGET_SCREEN.height;
+		
+		//Ti.API.info(game.size.height + '\n' + game.screen.height + '\n' + (game.size.height / game.TARGET_SCREEN.height));
+		//Ti.API.info(game.size.width + '\n' + game.screen.width);
+		//Ti.API.info(game.touchScaleX + ' ' + game.touchScaleY + ' ' + game.screenScale);
+		//Ti.API.info(Ti.Platform.displayCaps.platformHeight + ' ' + Ti.Platform.displayCaps.platformWidth);
 		
 		updateMargins();
 	};
@@ -145,6 +149,26 @@ var ApplicationWindow = function() {
         e.x = x;
         e.y = y;
         return e;
+	};
+	
+	game.translateTouch = function(_e) {
+		var e = { type:_e.type, x:_e.x, y:_e.y, source:_e.source };
+		var isAndroid = Ti.Platform.osname == 'android';
+		var x;
+		var y;
+		
+		if (isAndroid) {
+			x = e.x / game.touchScaleX;
+        	y = e.y / game.touchScaleY;
+		}
+		else {
+			x = e.x * game.touchScaleX;
+        	y = e.y * game.touchScaleY;
+		}
+		
+        e.x = x;
+        e.y = y;
+		return e;
 	};
 
 	// Handle android back button on a per-scene basis by adding defining a scene.backButtonHandler()

@@ -1,4 +1,5 @@
 var platino = require('co.lanica.platino');
+var isAndroid = Ti.Platform.osname == 'android';
 
 var HomeScene = function(window, game) {
 	var scene = platino.createScene();
@@ -11,7 +12,13 @@ var HomeScene = function(window, game) {
 
 	// Using this instead!
 	function createBackground() {
-		backgroundRandom = platino.createParticles({image:'graphics/StarField.pex'});
+		var backgroundRandom;
+		if (isAndroid) {
+			backgroundRandom = platino.createParticles({image:'graphics/StarField.pex'});
+		}
+		else {
+			backgroundRandom = platino.createParticles({image:'graphics/StarFieldiOS.pex'});
+		}
 		backgroundRandom.x = game.screen.width / 2;
 		backgroundRandom.y = game.screen.height / 2;
 		backgroundRandom.z = 0;
@@ -56,9 +63,9 @@ var HomeScene = function(window, game) {
 	function createInvaderGroup() {
 	    
 	    var invaderSprites = [
-	        {image:'graphics/Invader1.png', width:47, height:47, frame:0},
-	        {image:'graphics/Invader2.png', width:47, height:47, frame:0},
-	        {image:'graphics/Invader3.png', width:47, height:47, frame:0}
+	        {image:'graphics/Invader1.png', width:36, height:36, frame:0},
+	        {image:'graphics/Invader2.png', width:36, height:36, frame:0},
+	        {image:'graphics/Invader3.png', width:36, height:36, frame:0}
 	    ];
 	    
 	    for (var i = 0; i < A_ROWS+B_ROWS+C_ROWS; i++) {
@@ -82,9 +89,9 @@ var HomeScene = function(window, game) {
 		        invadersMover[i][j].rowIndex = i;
 		        invadersMover[i][j].columnIndex = j;
 		        
-		        invaders[i][j].x = (game.screen.width * 0.05) + (j * 65);
-		        invaders[i][j].y = 100 + (i * 65);
-		        invaders[i][j].z = 99;
+		        invaders[i][j].x = (game.screen.width * 0.05) + (j * 50);
+		        invaders[i][j].y = 75 + (i * 50);
+		        invaders[i][j].z = 9;
 		        
 		        scene.add(invaders[i][j]);
 		        invaders[i][j].show();
@@ -112,10 +119,10 @@ var HomeScene = function(window, game) {
             else {currentSound++;}
 			
 			//Check for downward movement
-			if (moveDown) {moveToX = 0; moveToY = 60; moveDown = false;}
+			if (moveDown) {moveToX = 0; moveToY = 50; moveDown = false;}
 			else {
-				if (invadersDirection == 'right') { moveToX = 60; }
-				else { moveToX = -60; }
+				if (invadersDirection == 'right') { moveToX = 50; }
+				else { moveToX = -50; }
 			}
 		}
 		else {
@@ -164,7 +171,7 @@ var HomeScene = function(window, game) {
 					
 					invaders[i][j].transform(invadersMover[i][j]);
 					
-					if ((invadersMover[i][j].x + 65 >= game.screen.width * 0.95 && invadersDirection == 'right') || (invadersMover[i][j].x <= game.screen.width * 0.05 && invadersDirection == 'left')) {
+					if ((invadersMover[i][j].x + 50 >= game.screen.width * 0.95 && invadersDirection == 'right') || (invadersMover[i][j].x <= game.screen.width * 0.05 && invadersDirection == 'left')) {
 						switchDirection = true;
 					}
 					
@@ -185,7 +192,7 @@ var HomeScene = function(window, game) {
 	}
 
 	// Create my ship instance
-	var myship = platino.createSprite({image:'graphics/Ship.png', width:47, height:41});
+	var myship = platino.createSprite({image:'graphics/Ship.png', width:36, height:32});
 	
 	// Transform object that reacts to user interaction
 	var myshipMover = platino.createTransform();
@@ -230,15 +237,15 @@ var HomeScene = function(window, game) {
 	var movingShip = false;
 	
 	game.addEventListener('touchstart', function(e) {
-		Ti.API.info('Fire button X: ' + fireButton.x + ' Fire button width: ' + fireButton.width);
-		Ti.API.info('Fire button Y: ' + fireButton.y + ' Fire button height: ' + fireButton.height);
-		Ti.API.info('Touch X: ' + e.x + ' Touch Y: ' + e.y);
+		//Ti.API.info('Fire button X: ' + fireButton.x + ' Fire button width: ' + fireButton.width);
+		//Ti.API.info('Fire button Y: ' + fireButton.y + ' Fire button height: ' + fireButton.height);
+		//Ti.API.info('Touch X: ' + game.translateTouch(e).x + ' Touch Y: ' + game.translateTouch(e).y);
 		// The following line works just fine on iOS.  Why doesn't it work on Android???
-		if (fireButton.contains(game.locationInView(e).x, game.locationInView(e).y)) {
+		if (fireButton.contains(game.translateTouch(e).x, game.translateTouch(e).y)) {
 			fireShot();
 		}
 		else {
-			oX = myship.x - game.locationInView(e).x;
+			oX = myship.x - game.translateTouch(e).x;
 			movingShip = true;
 		}
 	});
@@ -246,7 +253,16 @@ var HomeScene = function(window, game) {
 	
 	game.addEventListener("touchmove", function(e){
 		if(movingShip){
-			myship.x = game.locationInView(e).x + oX;
+			//Ti.API.info(game.screen.width + ' ' + (game.translateTouch(e).x + oX));
+			if (game.translateTouch(e).x + oX < 0) {
+				myship.x = 0;
+			}
+			else if (game.translateTouch(e).x + oX + myship.width > game.screen.width) {
+				myship.x = game.screen.width - myship.width;
+			}
+			else {
+				myship.x = game.translateTouch(e).x + oX;
+			}
 		}
 	});
 
