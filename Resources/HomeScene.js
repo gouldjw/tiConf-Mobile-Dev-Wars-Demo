@@ -442,10 +442,6 @@ var HomeScene = function(window, game) {
 	    scene.add(myship);
 	    initFireButton();
 	    scene.add(fireButton);
-	
-//		fireButton.addEventListener('click', function(e) {
-//			fireShot();
-//		});
 	    
 	    createUpdateTimer();
 	};

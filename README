@@ -1,6 +1,10 @@
-Welcome to your Platino Mobile Project
+Welcome to the tiConf Mobile Dev Wars Demo game.
 
-This is a Platino-ready single window application with a single view - a blank canvas. Requires Titanium Mobile SDK 3.1.1+
+Full disclosure:  Much of this code was adapted from the Lanica Alloy Shooter demo application.
 
-----------------------------------
-Platino is Copyright (c) 2012-2013 by Lanica, Inc. All Rights Reserved.
+This game requires the Platino modules to be installed.  You can download the modules and instructions for installation at http://lanica.co
+
+Currently, I am working on fixing some scaling issues with Android devices.  Will be adding better end-game conditions, levels and a UFO in the coming weeks!
+
+Enjoy!
+--John
