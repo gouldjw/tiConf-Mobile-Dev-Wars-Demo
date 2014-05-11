@@ -233,7 +233,8 @@ var HomeScene = function(window, game) {
 		Ti.API.info('Fire button X: ' + fireButton.x + ' Fire button width: ' + fireButton.width);
 		Ti.API.info('Fire button Y: ' + fireButton.y + ' Fire button height: ' + fireButton.height);
 		Ti.API.info('Touch X: ' + e.x + ' Touch Y: ' + e.y);
-		if (fireButton.contains(e.x, e.y - 200)) {
+		// The following line works just fine on iOS.  Why doesn't it work on Android???
+		if (fireButton.contains(game.locationInView(e).x, game.locationInView(e).y)) {
 			fireShot();
 		}
 		else {

@@ -9,7 +9,7 @@ var ApplicationWindow = function() {
 	});
 
 	var game = platino.createGameView();
-	game.fps = 30;
+	game.fps = 60;
 	game.color(0, 0, 0);
 	game.debug = false; // disables debug logs (not to be used for production)
 	game.enableOnDrawFrameEvent = false; // optimization: setting to 'false' disables 'enterframe' event
