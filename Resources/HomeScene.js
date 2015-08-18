@@ -1,4 +1,4 @@
-var platino = require('co.lanica.platino');
+var platino = require('io.platino');
 var isAndroid = Ti.Platform.osname == 'android';
 
 var HomeScene = function(window, game) {
@@ -28,7 +28,7 @@ var HomeScene = function(window, game) {
 	var A_ROWS = 1;
 	var B_ROWS = 2;
 	var C_ROWS = 2;
-	var INVADERS_PER_ROW = 10;
+	var INVADERS_PER_ROW = 11;
 	var MAX_FRIENDLY_SHOTS = 2;
 	var MAX_ENEMY_SHOTS = 1;
 	var invaderCheckCounter = 0;
@@ -405,16 +405,19 @@ var HomeScene = function(window, game) {
 	function fireZap() {
 		var i;
 		var j;
-		var found = false;
+		var firing = false;
+		var maxEnemies = (A_ROWS+B_ROWS+C_ROWS) * INVADERS_PER_ROW;
+		var enemiesChecked = 0;
 		
-	    // Wait 200 msec for firing next bullet
-	    if (+new Date() - lastTimeZapFired > 200 && zaps[zapIndex].ready) {
+	    // Wait 2-6 seconds for firing next bullet
+	    if (+new Date() - lastTimeZapFired > (Math.ceil(Math.random() * 4000) + 2000) && zaps[zapIndex].ready) {
 	    	for (i = A_ROWS+B_ROWS+C_ROWS - 1; i >= 0; i--) {
     			for (j = 0; j < INVADERS_PER_ROW; j++) {
     				//Ti.API.info(i + ' ' + j);
-    				if (invaders[i][j].alive) {found = true; break;}
+    				enemiesChecked++;
+    				if (invaders[i][j].alive && enemiesChecked >= Math.ceil(Math.random() * maxEnemies)) {firing = true; break;}
     			}
-    			if (found) {break;}
+    			if (firing) {break;}
     		}
     		firingInvaderRow = i;
     		firingInvaderCol = j;
@@ -524,7 +527,7 @@ var HomeScene = function(window, game) {
 	//
 	function transform_3d() {
 	    transform_camera.is3d = true;
-	    transform_camera.duration = 3000;
+	    transform_camera.duration = 2000;
 	    transform_camera.lookAt_eyeY = game.screen.height;
 	    transform_camera.lookAt_eyeZ = 64;
 	    transform_camera.lookAt_centerY = 0;
@@ -559,13 +562,13 @@ var HomeScene = function(window, game) {
 	/*
 	 * Double-tap to transform to 2.5D camera
 	 */
-//	game.addEventListener('doubletap', function(e) {
-//	    if (transform_camera.is3d) {
-//	        transform_2d();
-//	    } else {
-//	        transform_3d();
-//	    }
-//	});
+/*	game.addEventListener('doubletap', function(e) {
+	    if (transform_camera.is3d) {
+	        transform_2d();
+	    } else {
+	        transform_3d();
+	    }
+	});*/
 
 
 

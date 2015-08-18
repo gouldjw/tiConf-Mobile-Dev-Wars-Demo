@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.avatarsoft.mdwplatino</id>
-    <name>Mobile Dev Wars</name>
+    <id>com.blackgategames.mdwplatino</id>
+    <name>Space Invaders</name>
     <version>1.0</version>
     <publisher>johngould</publisher>
     <url>http://</url>
     <description>not specified</description>
-    <copyright>2014 by johngould</copyright>
+    <copyright>2015 by johngould</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>3426bb6b-70a7-4c06-9a40-5de77793021f</guid>
+    <guid>ed3abe0e-20ba-4858-9000-6a23b03e4c97</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -37,18 +37,39 @@
             </dict>
         </plist>
     </ios>
-    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
-    <mobileweb>
-        <precache/>
-        <splash>
-            <enabled>true</enabled>
-            <inline-css-images>true</inline-css-images>
-        </splash>
-        <theme>default</theme>
-    </mobileweb>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest android:installLocation="auto" android:versionCode="1" android:versionName="0.5">
+            <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <application android:debuggable="false"
+                android:icon="@drawable/appicon"
+                android:label="Mobile Dev Wars" android:name="MobileDevWarsApplication">
+                <activity
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:label="@string/app_name"
+                    android:name=".MobileDevWarsActivity" android:theme="@style/Theme.Titanium">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN"/>
+                        <category android:name="android.intent.category.LAUNCHER"/>
+                    </intent-filter>
+                </activity>
+                <activity
+                    android:configChanges="keyboardHidden|orientation|screenSize" android:name="org.appcelerator.titanium.TiActivity"/>
+                <activity
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:name="org.appcelerator.titanium.TiTranslucentActivity" android:theme="@android:style/Theme.Translucent"/>
+                <activity android:configChanges="screenSize" android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
+                <service android:exported="false" android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"/>
+            </application>
+        </manifest>
+    </android>
     <modules>
-        <module platform="android">co.lanica.platino</module>
-        <module platform="iphone">co.lanica.platino</module>
+        <module platform="android">io.platino</module>
+        <module platform="iphone">io.platino</module>
+        <module platform="commonjs">ti.cloud</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
@@ -58,5 +79,22 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.2.3.GA</sdk-version>
+    <sdk-version>4.1.0.GA</sdk-version>
+    <property name="appc-app-id" type="string">5590e0cd2498394930dc61a3</property>
+    <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-development" type="string">XtrY0HkITI7afsyGphhyZQnMS4GGRwgD</property>
+    <property name="acs-oauth-key-development" type="string">28kvJMZrIEfGnZ5PZ0Ge0aWxljqJ6wLj</property>
+    <property name="acs-api-key-development" type="string">kvyO2Q1x9UuiVbmjSiHgEu8qufxqWlIp</property>
+    <property name="acs-username-development" type="string">appc_app_user_dev</property>
+    <property name="acs-password-development" type="string">BOwcaiBYwXtdSo9zKT</property>
+    <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-production" type="string">Dskvggy6zRbMVLjq8weGfjwNSGiDDimJ</property>
+    <property name="acs-oauth-key-production" type="string">U6R1IUZNueukC9Toa252awyLF8fO7RqP</property>
+    <property name="acs-api-key-production" type="string">4dbVlXl1yU89oN0FJCfLzJXyHWCDDUPB</property>
+    <property name="acs-username-production" type="string">appc_app_user</property>
+    <property name="acs-password-production" type="string">9AB5mpvyBI9tfOSEvu</property>
+    <property name="appc-org-id" type="string">100004970</property>
+    <property name="appc-creator-user-id" type="string">e3c14dba-f2e7-4a4b-8565-95f3bdee4903</property>
 </ti:app>

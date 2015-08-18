@@ -1,8 +1,9 @@
 eclipse.preferences.version=1
 iosLaunchConfigurationAttributes/ATTR_MINIFY=true
 iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=Mobile Dev Wars
-iosLaunchConfigurationAttributes/appid=com.avatarsoft.mdwplatino
+iosLaunchConfigurationAttributes/ATTR_UPLOAD_DEBUG_SYMBOLS=false
+iosLaunchConfigurationAttributes/appid=com.blackgategames.mdwplatino
 iosLaunchConfigurationAttributes/certificate=John Gould (3XVPHG9856)
 iosLaunchConfigurationAttributes/keychain=
-iosLaunchConfigurationAttributes/sdk_version=7.1
-iosLaunchConfigurationAttributes/uuid=4CBCD7DA-986F-4EC5-B8C2-0E0843E34B1E
+iosLaunchConfigurationAttributes/sdk_version=8.4
+iosLaunchConfigurationAttributes/uuid=9871977d-4582-4e52-b9c7-95e49d5f093c

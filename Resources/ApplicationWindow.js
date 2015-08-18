@@ -1,4 +1,4 @@
-var platino = require('co.lanica.platino');
+var platino = require('io.platino');
 
 var ApplicationWindow = function() {
 	var window = Ti.UI.createWindow({
@@ -9,7 +9,7 @@ var ApplicationWindow = function() {
 	});
 
 	var game = platino.createGameView();
-	game.fps = 30;
+	game.fps = 60;
 	game.color(0, 0, 0);
 	game.debug = false; // disables debug logs (not to be used for production)
 	game.enableOnDrawFrameEvent = false; // optimization: setting to 'false' disables 'enterframe' event
@@ -27,6 +27,8 @@ var ApplicationWindow = function() {
 	// Set your target screen resolution (in platform-specific units) below
 	var targetWidth = 960;
 	var targetHeight = 640;
+	//var targetWidth = 1920;
+	//var targetHeight = 1080;
 	
 	game.TARGET_SCREEN = {
 		width: targetWidth,
@@ -109,6 +111,10 @@ var ApplicationWindow = function() {
 
 	// Loads HomeScene.js as starting point to the app
 	game.addEventListener('onload', function(e) {
+		//game.size = {width: 1920, height: 1080};
+		//game.screen = {width: 1920, height: 1080};
+		//Ti.API.info(game.size.width + ' ' + game.size.height);
+		//Ti.API.info(game.screen.width + ' ' + game.screen.height);
 		updateScreenSize();
 
 		var HomeScene  = require("HomeScene");
